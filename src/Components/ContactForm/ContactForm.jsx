@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import { useSelector, useDispatch } from 'react-redux';
-import { contactsActions } from 'redux/index';
+// import { contactsActions } from 'redux/index';
+import { addContact } from '../../redux/operations';
 import s from '../ContactForm/ContactForm.module.css';
 
 export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const contacts = useSelector(state => state.contacts.items);
+  const isLoading = useSelector(state => state.contacts.isLoading);
   const dispatch = useDispatch();
 
   const handleChange = event => {
@@ -28,7 +30,7 @@ export default function ContactForm() {
   const handleSubmit = event => {
     event.preventDefault();
     const newContact = {
-      id: nanoid(),
+      // id: nanoid(),
       name: name,
       number: number,
     };
@@ -38,7 +40,7 @@ export default function ContactForm() {
       return;
     }
 
-    dispatch(contactsActions.addContact(newContact));
+    dispatch(addContact(newContact));
 
     reset();
   };
@@ -78,6 +80,7 @@ export default function ContactForm() {
       <button className={s['button']} type="submit">
         Add contact
       </button>
+      {isLoading && <h3>Loading...</h3>}
     </form>
   );
 }

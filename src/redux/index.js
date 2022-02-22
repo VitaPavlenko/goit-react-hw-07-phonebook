@@ -1,1 +1,2 @@
-export * as contactsActions from './redux';
+// export * as contactsActions from './slice';
+// export { addContact } from './operations';
