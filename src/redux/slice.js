@@ -59,22 +59,27 @@ const contactsSlice = createSlice({
       isLoading: false,
     }),
 
-    [removeContact.pending]: state => {
-      state.error = null;
-      state.isLoading = true;
-    },
+    [removeContact.pending]: state => ({
+      ...state,
+      error: null,
+      isLoading: true,
+    }),
 
     [removeContact.fulfilled]: (state, { payload }) => {
+    
+      ////// 1 вар. мутации
       state.isLoading = false;
-      state.items = state.items.filter(contact => contact.id !== payload);
+      state.items = state.items.filter(item => item.id !== payload);
 
+      ////// 2 вар. мутации
       // const idx = state.items.findIndex(contact => contact.id === payload.id);
       // state.items.splice(idx, 1);
     },
-    [removeContact.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      state.error = payload;
-    },
+    [removeContact.rejected]: (state, { payload }) => ({
+      ...state,
+      isLoading: false,
+      error: payload,
+    }),
   },
 });
 
